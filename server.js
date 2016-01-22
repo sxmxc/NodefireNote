@@ -4,7 +4,7 @@ var path = require('path'),
 	socket = require('socket.io'),
 	httpRoutes = require('./routes/http'),
 	socketRoutes = require('./routes/socket'),
-	GameStore = require('./lib/GameStore');
+	GameStore = require('./lib/noteStore');
 
 var app = express(),
 	server = http.createServer(app),
@@ -57,5 +57,5 @@ socketRoutes.attach(io, DB);
 
 // And away we go
 server.listen(app.get('port'), function() {
-	console.log('ChessCompanion is listening on port ' + app.get('port'));
+	console.log('nodefirenote is listening on port ' + app.get('port'));
 });
