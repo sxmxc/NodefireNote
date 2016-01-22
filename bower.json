@@ -1,0 +1,22 @@
+{
+  "name": "firenote",
+  "description": "node.js app based on firebase/firepad",
+  "main": "server.js",
+  "authors": [
+    "steven mcneely"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/sxmxc/NodefireNote",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
