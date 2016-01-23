@@ -73,90 +73,6 @@ var home = function(req, res) {
   // Welcome
   res.render('home')
 };
-
-/**
- * Render "Game" Page (or redirect to home page if session is invalid)
- */
-var game = function(req, res) {
-
-  // Validate session data
-  var validData = validateGame(req);
-  if (!validData) { res.redirect('/'); return; }
-
-  // Render the game page
-  res.render('game', validData);
-};
-
-/**
- * Process "Start Game" form submission
- * Redirects to game page on success or home page on failure
- */
-var startGame = function(req, res) {
-
-  // Create a new session
-  req.session.regenerate(function(err) {
-    if (err) { res.redirect('/'); return; }
-
-    // Validate form input
-    var validData = validateStartGame(req);
-    if (!validData) { res.redirect('/'); return; }
-
-    // Create new game
-    var gameID = DB.add(validData);
-
-    // Save data to session
-    req.session.gameID      = gameID;
-    req.session.playerColor = validData.playerColor;
-    req.session.playerName  = validData.playerName;
-
-    // Redirect to game page
-    res.redirect('/game/'+gameID);
-  });
-};
-
-/**
- * Process "Join Game" form submission
- * Redirects to game page on success or home page on failure
- */
-var joinGame = function(req, res) {
-
-  // Create a new session
-  req.session.regenerate(function(err) {
-    if (err) { res.redirect('/'); return; }
-
-    // Validate form input
-    var validData = validateJoinGame(req);
-    if (!validData) { res.redirect('/'); return; }
-
-    // Find specified game
-    var game = DB.find(validData.gameID);
-    if (!game) { res.redirect('/'); return;}
-
-    // Determine which player (color) to join as
-    var joinColor = (game.players[0].joined) ? game.players[1].color : game.players[0].color;
-
-    // Save data to session
-    req.session.gameID      = validData.gameID;
-    req.session.playerColor = joinColor;
-    req.session.playerName  = validData.playerName;
-
-    // Redirect to game page
-    res.redirect('/game/'+validData.gameID);
-  });
-};
-
-/**
- * Process "Random Game" form submission
- * Redirects to random game page on success
- */
-var randomGame = function(req, res) {
-
- 
-  res.render('random');
-};
-/**
- * Render "fireNote" Page
- */
 var fireNote = function(req,res) {
 	res.render('fireNote');
 }
@@ -174,7 +90,6 @@ var invalid = function(req, res) {
  */
 exports.attach = function(app, db) {
   DB = db;
-
   app.get('/',         home);
   app.get('/fireNote', fireNote)
   app.all('*',         invalid);
