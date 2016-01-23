@@ -4,13 +4,13 @@ var path = require('path'),
 	socket = require('socket.io'),
 	httpRoutes = require('./routes/http'),
 	socketRoutes = require('./routes/socket'),
-	GameStore = require('./lib/noteStore');
+	noteStore = require('./lib/noteStore');
 
 var app = express(),
 	server = http.createServer(app),
 	io = socket.listen(server);
 
-var DB = new GameStore();
+var DB = new noteStore();
 
 var cookieParser = express.cookieParser('I wish you were an oatmeal cookie'),
 	sessionStore = new express.session.MemoryStore();
